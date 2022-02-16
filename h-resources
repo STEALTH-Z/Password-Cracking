@@ -1,0 +1,168 @@
+I have already done a few tutorials on password cracking, including ones for Linux and Windows, WEP and WPA2, and even online passwords using THC Hydra. Now, I thought it might be worthwhile to begin a series on password cracking in general. Password cracking is both an art and a science, and I hope to show you the many ways and subtleties involved.
+
+We will start with the basic principles of password cracking that are essential to ALL password cracking techniques, followed by some of the tools and technologies used. Then, one by one, I will show you how to use those principles and technologies effectively to crack or capture the various types of passwords out there.
+The Importance & Methods of Password Cracking
+
+Passwords are the most widely used form of authentication throughout the world. A username and password are used on computer systems, bank accounts, ATMs, and more. The ability to crack passwords is an essential skill to both the hacker and the forensic investigator, the latter needing to hack passwords for accessing the suspect's system, hard drive, email account, etc.
+
+Although some passwords are very easy to crack, some are very difficult. In those cases, the hacker or forensic investigator can either employ greater computing resources (a botnet, supercomputer, GPU, ASIC, etc.), or they can look to obtain the password in other ways.
+
+These ways might include insecure storage. In addition, sometimes you don't need a password to access password-protected resources. For instance, if you can replay a cookie, session ID, a Kerberos ticket, an authenticated session, or other resource that authenticates the user after the password authentication process, you can access the password protected resource without ever knowing the password.
+
+Sometimes these attacks can be much easier than cracking a complex and long password. I will do a tutorial on various replay attacks in the near future (look out specifically for my upcoming article on stealing the Facebook cookie to access someone's Facebook account).
+
+Now, let's start with the basics.
+Step 1: Password Storage
+
+In general, passwords are not stored in clear text. As a rule, passwords are stored as hashes. Hashes are one-way encryption that are unique for a given input. These systems very often use MD5 or SHA1 to hash the passwords.
+
+In the Windows operating system, passwords on the local system are stored in the SAM file, while Linux stores them in the /etc/shadow file. These files are accessible only by someone with root/sysadmin privileges. In both cases, you can use a service or file that has root/sysadmin privileges to grab the password file (e.g. DLL injection with samdump.dll in Windows).
+
+Step 2: Types of Attacks
+Dictionary
+
+A dictionary attack is the simplest and fastest password cracking attack. To put it simply, it just runs through a dictionary of words trying each one of them to see if they work. Although such an approach would seem impractical to do manually, computers can do this very fast and run through millions of words in a few hours. This should usually be your first approach to attacking any password, and in some cases, it can prove successful in mere minutes.
+
+Rainbow Table
+
+Most modern systems now store passwords in a hash. This means that even if you can get to the area or file that stores the password, what you get is an encrypted password. One approach to cracking this encryption is to take dictionary file and hash each word and compare it to the hashed password. This is very time- and CPU-intensive. A faster approach is to take a table with all the words in the dictionary already hashed and compare the hash from the password file to your list of hashes. If there is a match, you now know the password.
+
+Brute Force
+
+Brute force is the most time consuming approach to password cracking. It should always be your last resort. Brute force password cracking attempts all possibilities of all the letters, number, special characters that might be combined for a password and attempts them. As you might expect, the more computing horsepower you have, the more successful you will be with this approach.
+
+Hybrid
+
+A hybrid password attack is one that uses a combination of dictionary words with special characters, numbers, etc. Often these hybrid attacks use a combination of dictionary words with numbers appending and prepending them, and replacing letters with numbers and special characters. For instance, a dictionary attack would look for the word "password", but a hybrid attack might look for "p@$$w0rd123".
+
+Step 3: Commonly Used Passwords
+
+As much as we think each of us is unique, we do show some common patterns of behavior within our species. One of those patterns is the words we choose for passwords. There are number of wordlists that have been compiled of common passwords. In recent years, many systems have been cracked and passwords captured from millions of users. By using these already captured passwords, you are likely to find at least a few on the network you are trying to hack.
+
+Step 4: Password Cracking Strategy
+
+Many newbies, when they start cracking passwords, simply choose a tool and word list and then turn them loose. They are often disappointed with the results. Expert password crackers have a strategy. They don't expect to be able to crack every password, but with a well-developed strategy, they can crack most passwords in a very short amount of time.
+
+The key to develop a successful strategy of password cracking is to use multiple iterations, going after the easiest passwords with the first iteration to the most difficult passwords using different techniques for each iteration.
+
+Step 5: Password Cracking Software
+John
+
+John the Ripper is probably the world's best known password cracking tool. It is strictly command line and strictly for Linux. Its lack of a GUI makes a bit more challenging to use, but it is also why it is such a fast password cracker.
+
+One of the beauties of this tool is its built in default password cracking strategy. First, attempts a dictionary attack and if that fails, it then attempts to use combined dictionary words, then tries a hybrid attack of dictionary words with special characters and numbers and only if all those fail will it resort to a brute force.
+
+Ophcrack
+
+Ophcrack is a free rainbow table-based password cracking tool for Windows. It is among the most popular Windows password cracking tools (Cain and Abel is probably the most popular; see below), but can also be used on Linux and Mac systems.
+Image by Ysangkok/Wikimedia Commons
+
+It cracks LM and NTLM (Windows) hashes. For cracking Windows XP, Vista and Windows 7, you can download free rainbow tables. You can download Ophcrack on SourceForge, and you can get some free and premium rainbow tables for Ophcrack here.
+L0phtCrack
+
+L0phtCrack is an alternative to Ophcrack, and attempts to crack Windows passwords from hashes in the SAM file or the Active Directory (AD). It also uses dictionary and brute force attacks for generating and guessing passwords.
+Image via L0phtCrack
+
+L0phtCrack was acquired by Symantec and they promptly discontinued it in 2006. Later, L0phtCrack developers re-acquired this excellent password cracking tool and re-released it in 2009. You can download the tool here.
+Cain and Abel
+
+Cain and Abel just might be the best known password cracking tool on the planet. Written strictly for Windows, it can crack numerous hash types, including NTLM, NTLMv2, MD5, wireless, Oracle, MySQL, SQL Server, SHA1, SHA2, Cisco, VoIP, and many others.
+
+Cain and Abel can crack passwords using a dictionary attack, rainbow attack, and brute force. One of its better features is the ability to select the password length and character set when attempting a brute force attack. And besides being an excellent password cracking tool, it is also a great ARP Poisoning and MiTM tool.
+
+THC-Hydra
+
+THC-Hydra is probably the most widely used online hacking tool. It is capable of cracking web form authentication, and when used in conjunction with other tools such as Tamper Data, it can be a powerful and effective tool for cracking nearly every type of online password authentication mechanism.
+
+Brutus
+
+Brutus is an online password cracking tool that many consider the fastest online password cracker. It is free and available on both Linux and Windows, and it supports password cracking in HTTP (Basic Authentication), HTTP (HTML Form/CGI), POP3, FTP, SMB, Telnet, and other types such as IMAP, NNTP, NetBus, etc.
+
+Brutus has not been updated in quite awhile, but it can still be useful and since it is open source, you can update it yourself. Brutus can be downloaded here.
+
+Aircrack-Ng
+
+In my humble opinion, aircrack-ng is undoubtedly the best all-around Wi-Fi hacking software available. It is capable of cracking both WEP and WPA2, and it is also capable of doing the following, among many other things.
+
+Creating a Soft AP
+Creating an Evil Twin
+Creating a Rogue AP
+Conducting a DOS attack against a Wi-Fi AP
+
+It is only available for Linux and requires a bit of a learning curve to master, but you will be richly rewarded for the time spent learning it. In addition, to be most effective you will need to use an aircrack-ng compatible wireless card, so check their extensive list before buying your card. You can find more info on aircrack-ng over in my Wi-Fi hacking series.
+
+Step 6: Password Cracking Hardware
+Botnet
+
+Password cracking is simply a function of brute force computing power. What one machine can do in one hour, two machines can do in a half hour. This same principle applies to using a network machines. Imagine what you can do if you could access a network of one million machines!
+
+Some of the botnets available around the globe are more than a million machines strong and are available for rent to crack passwords. If you have a password that might take one year to crack with your single CPU, a million-machine botnet can cut that time to approximately 1 millionth the time, or 30 seconds!
+
+GPU
+
+GPUs, or graphical processing units, are much more powerful and faster than CPU for rendering graphics on your computer and for cracking passwords. We have a few tools built into Kali that are specially designed for using GPUs to crack passwords, namely cudahashcat, oclhashcat, and pyrit. Look for coming tutorials on using these tools and the GPU on your high-end video card to accelerate your password cracking.
+
+ASIC
+
+In recent years, some devices have been developed specifically for hardware cracking. These application-specific devices can crack passwords faster than over 100 CPUs working symmetrically.
+
+[1] Bitfury boards by Black Arrow, [2] Butterfly Labs processor, [3] Inside the Butterfly Labs Monarch
+Black Arrow Software and Butterfly Labs, among others, are now selling these devices for prices up to $1500 per
+
+Very often, hackers new to password cracking are looking for a single tool or technique to crack passwords, but unfortunately, that does not exist. That's fortunate for network security, though. Each type of password requires a unique strategy tailored to the situation. The situation can be the type of encryption (MD5, SHA1, NTLM, etc.), remote vs. offline, salted or unsalted, an so on. Your password cracking strategy must be specific to the situation.
+
+Many newbie password crackers simply run their password cracking tool and expect a breakthrough. They run huge wordlists and hope for the best. If it doesn't crack the password, they are lost. Here I want to develop a multi-iteration strategy for password cracking that will work on the vast majority of passwords, though not all. No strategy will work on all passwords with the exception of the CPU and time-intensive brute force cracking.
+
+Developing a Password-Cracking Strategy
+
+I'm assuming here that we are after more than a single password. Generally, password cracking is an exercise of first capturing the hashes. In Windows systems, these are in the SAM file on local systems, LDAP in active directory systems, and /etc/shadow on Linux and UNIX systems. These hashes are one-way encryption that are unique for every password input (well, nearly every password input, to be precisely accurate). In each case, we need to know what encryption scheme is being used in order to crack the hash.
+
+For instance, Linux and Unix systems use MD5 and modern Windows systems use HMAC-MD5. Other systems may use SHA1, MD4, NTLM, etc. Make certain you know what hash is being used on the system you are trying to crack, otherwise you will spend hours or days without satisfactory results.
+
+All that having been said, John the Ripper has an automatic hash detector that is correct about 90% of the time, but when it is wrong, there is no way to know. In Cain and Abel as well as hashcat, we must tell the tool what type of hash we are trying to crack.
+
+Here we can see a screenshot of the types of hashes that we can crack using hashcat and their numeric values.
+
+Step 1: Brute Force Short Passwords
+Although it might seem contrary to common sense, I often start by trying to brute force very short passwords. Although brute force of long passwords can be very time consuming (days or weeks), very short passwords can be brute forced in a matter of minutes.
+I start by trying to brute force passwords of six characters or less. Depending upon my hardware, this can usually be accomplished in a matter of minutes or hours. In many environments, this will yield at least a few passwords.
+
+In addition, I will also try to brute force all numeric passwords at this stage. Number passwords are the easiest to crack. An 8-character numeric password only requires that we try 100 million possibilities, and even a 12-character number password only requires 1 trillion possibilities. With powerful hardware, we can do this with barely breaking a sweat.
+
+Step 2: Low-Hanging Fruit
+Once we broken a few short passwords by brute force, we will still likely have a file that has many, many hashes in it. If we trying to compromise an institutional or corporate network, we usually only need to crack a single password to begin the network compromise.
+Although the user whose password is cracked may have limited rights and privileges, there are many ways to escalate privileges to sysadmin or root. This means that if we can crack a single password on a network, we can likely take down the entire network.
+
+All of the above having been said, let's next go after any low-hanging fruit. That means let's go next after those passwords that are easiest to crack. For instance, if we now the institution has a password policy that all passwords must be 8 characters, many people will make their passwords the absolute minimum.
+
+To attempt a quick and dirty pass on these hashes, simply chose a list of dictionary words that are eight characters. Running through the millions of words in such a list will generally only take only a few hours and is likely to yield a significant portion of the passwords.
+
+Step 3: Try Common Passwords
+Human beings, although we think we unique, tend to think and act similarly. Just like pack animals, we follow the herd and act similarly. The same can be said for passwords.
+Users want a password that fulfills their organizations minimum password policy, but also is easy to remember. That's why you will see passwords, such as "P@ssw0rD" so often. Despite its obvious simplicity, it fulfills a password policy of minimum of 8 characters, uppercase and lowercase letters, a special character, and a number. Believe it or not, this password and its variations are used numerous times.
+
+Knowing that humans tend to use these types of passwords, in my next iteration on the password hash list, I will try a password list of commonly found passwords. Numerous sites on the web include wordlists of cracked or captured passwords. In addition, you might try scraping the web to capture as many passwords as possible.
+
+Step 4: Combine Words with Numbers
+Running through the low-hanging fruit in Step #2 and common passwords on Step #3 will likely yield at least a few passwords and the time it consumes is minimal. Now we want to attack the remaining hashes and take the next step in complexity.
+
+In this iteration, we will run the remaining hashes through a wordlist that has longer dictionary words and dictionary words with numbers. Users, because they are forced to change passwords periodically, will often just add numbers to the beginning or end of their passwords. Some of our password cracking tools like hashcat and John the Ripper allow us to use rules to apply to wordlist to combine words, append and prepend numbers, change case, etc.
+
+Step 5: Hybrid Attack
+By now we have usually cracked over 50% of the passwords in Steps #1 through #4, but we have the harder work ahead to crack the more intransigent passwords. These passwords will often include special characters and combined words.
+
+These would include such passwords as "socc3rmom" and "n3xtb1gth1ng". These are relatively strong passwords including special characters and numbers, but because they include variations on dictionary words they are often easily crackable.
+
+Next, we need a password list that combines dictionary words with numbers and special characters. Fortunately, this is something that John the Ripper does automatically, but other password crackers (Cain and Abel) don't necessarily. Hashcat can be run with one of its many rule sets to combine words and special characters to your wordlist.
+
+Step 6: Finally, if All Else Fails...
+If all else fails, you are left to brute force the passwords. This can very slow with a single CPU, but can speeded up 1000x or more with a botnet, a password cracking ASIC, or a very fast multiple GPU password cracker (I'll be doing tutorials on each of these in the near future). Among the fastest of these, a 25 GPU password cracker is capable of 348 billion hashes per second!
+
+Even when we are left with a brute force attack, we can be strategic about it. For instance, if we know that the password policy is a minimum of 8 characters, try brute forcing with just eight characters. It will save you time and likely yield some passwords.
+
+In addition, you can choose your character set. Once again, if we know that the password policy is uppercase, lowercase, and a number, choose only those character sets to brute force.
+
+Finally, some password crackers like hashcat (look for my upcoming tutorial on hashcat) have built-in "policies" that you can choose to attempt the brute force. These are similar to strategies and help by shaping your attacks based on the password-construction protocol followed by a company or group.
+
+These rules can be used in other password cracking tools such John the Ripper.
+It is important to be successful at password cracking that you follow a systematic strategy, no matter what tool you are using, that requires multiple iterations to crack the most passwords. This strategy generally works from the passwords that are easiest to crack to the most difficult.
